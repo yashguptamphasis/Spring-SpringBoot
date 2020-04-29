@@ -1,0 +1,7 @@
+In boot web Project the View will be scanned after main/webapp 
+folder. 
+
+We dont have to specify any type as in normal as we do in spring eg jsp in helper class
+
+We have to add tomcat jasper dependancy but additionally.
+else it will download the file insted presenting it. 

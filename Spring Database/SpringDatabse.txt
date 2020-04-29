@@ -1,0 +1,44 @@
+DataBase : Spring has in built dataBase Called H2, and to view it add web.
+
+JBBC : 
+dependancy - 1. Jdbc 2.H2 3.Web 4.JPA
+
+To setup H2.
+
+Step 1:  Go to Application.properties and add
+	1 spring.h2.console.enabled=true
+	2 spring.h2.console.path=/h2
+
+Step 2: you can access h2 by link localhost:8080/h2
+
+step 3 : verify jdbc url has jdbc:h2:mem:testdb
+
+step 4 : create a sql file in src/main/resources with name
+	"data.sql"
+	now we can create table or insert value or write any sql queries
+
+	As h2 is der only per application run. Once we close it goes away so 
+	as it is loaded data of data.sql is loaded.]
+
+
+Example with JDBC.
+
+Create object of JdbcTemplate.
+
+Methords for JdbcTemple: 
+
+https://www.javatpoint.com/spring-JdbcTemplate-tutorial
+Go here 
+
+
+TO fetch data : 
+
+methord 1. jdbctemplate.Query("query", RowMapper),
+	jdbctemplate.Query("query", ResultSetExtractor).
+
+	To Query with param
+
+	jdbctemplate.queryForObject("select * from where id=?", new Object [1]);
+
+
+

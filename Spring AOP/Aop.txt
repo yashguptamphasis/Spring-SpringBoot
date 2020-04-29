@@ -1,0 +1,71 @@
+AOP : Aspect orianted programing used to maintain a log when 
+	we have cross cutting concerns(eg : getting data from 
+	data layer to bussines layer).
+
+Dependancy for Spring AOP- Spring AOP, Aspect J
+
+Concern : We have diffrent layers in an Application eg: Web, Bussiness, Data.
+	  They are called concerns.
+
+
+How to use?
+
+Step 1: Make as Aspect that will be a class with Annotaion Aspect
+		
+	What is Aspect : Combination of pointcut and Advice
+	@Aspect
+	class Demo{}
+
+
+Step 2: Add Advice 
+	Advice will be methord content in side the class
+	
+	
+	Types : 1.Before 2.After 3.AfterReturn 4.AfterThrowing	 4.Around
+
+	@Before
+	int add(){}
+
+
+	@AfterReturning(value="execution(* com.Aop.demoAop.service.*.*(..))"
+			, returning="result")
+	void after(Object result)
+	{	
+		System.out.println("After and the value is : "+result); 
+		
+	}
+
+
+Step 3: Add pointcut and specify package methord
+  	This is noting but the methord name which we want to log
+
+	Syntax	@Before("excecution(* Package.*.*(..)") 
+		*1= return type.
+		*2= any class
+		*3= any Methord.
+			("excecution(*Package.Class.methord(Paramenter)"))		
+	
+	
+	@Aspect
+	public class Aspect1 {
+
+		@Before	
+		void check()
+		{
+			System.out.println("Aspect called");
+		}
+	}
+
+
+	How to give common pointCut??
+	
+	->Put the point cut in a methord and use that methord name above all your advice in the pointcut.
+		Give @PointCut annotation on that methord.	
+
+Join point : the data which we get from the methord call
+ 		so if a pointCut is calling 100 methord we will have
+		100 joint point;
+
+Point cut : It is the expression "excecution(* package.*.*(..))";
+
+Advice : What is writen inside the methord of the Asspect class.

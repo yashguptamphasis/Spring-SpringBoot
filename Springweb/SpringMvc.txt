@@ -1,0 +1,119 @@
+Flow    1. web.xml recives the request sends to Dispatcher Servlet.
+	2. Dispatcher servlet by help of helper class finds package and Controller with the matching url
+	3. Controller class with matching RequestMapping methord performs bussiness logic.
+	4. after that it return ModelAndView.
+	5. It does to DispatcherServlet again it attaches Model and sends back webPage.	
+
+Step for Spring MVC : -
+
+1st configure the webApp by adding dependancy.
+		<dependency>
+    		<groupId>org.springframework</groupId>
+    		<artifactId>spring-webmvc</artifactId>
+    		<version>5.2.5.RELEASE</version>
+		</dependency>
+		
+
+
+2st Configure the Front controller in web.xml(DeploymentDesripter) to Dispatcher-Servlet.
+
+In the web.xml we have to specify for all what ever incoming requests send it to Dispatcher-Servlet.
+
+3rd we need helper class for DispatcherServlet to tell the package and all
+    so we will add (spring-servlet.xml) file.
+HELPER CLASS : 1. define package where are controller are there.
+	       2. define package where all view are there and there type.
+	
+Controller : in  (spring-servlet.xml) we mention the package name
+	so that the componant scan can scan it.
+
+	After that we need a annotation on our class name as @Component.
+
+	That means we have Specified mehords into it.
+
+	@Controller
+	public class Controller1 {
+
+	
+		@RequestMapping(value = "/login/")
+		String login()
+		{
+			return "From Login";
+		}
+	}
+	
+	We make use of RequestMapping to  tell the controller about the incoming URL.
+---------------------------------------------------------------------------------------------------------------
+
+
+To Return suff -  now Dispacther Servlet acts as a Fornt Controller and thinks what ever coming back is a View
+		but above we are sending a String back to we need to inform it that,
+
+		So we make use of 
+		@ResponseBody
+
+		
+	@Controller
+	@ResponseBody
+	public class Controller1 {
+
+	
+		@RequestMapping(value = "/login/")
+		String login()
+		{
+			return "From Login";
+		}
+	}
+
+	Now this @ResponseBody says that the methord is not returning a View but it is returning a String.
+
+
+2. We have to put  a view Resolver in Spring-servlet.xml  it is to specify that what ever View we are returning 
+are of type jsp and also the package.
+
+
+______________________________________________________________________________________________________________________________________
+
+To take Param  3 ways
+
+we make use of String login(@RequestParam String name,@RequestParam String pass)// we can add as much as we want.
+
+2nd we need to pass model with view 
+
+for that we have two options 1 Model : with m.addAttribute 
+	
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	String loginPost(@RequestParam String name,Model m)
+	{
+		m.addAttribute("name",m);
+		System.out.println("Controller Called the name is  "+name);
+		return "welcome";
+	}
+	
+2nd ModelMap : 
+To directly map it to modelMap model
+
+
+	
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	String loginPost(@RequestParam String name,ModelMap model)
+	{
+		model.put("name", name);
+		System.out.println("Controller Called the name is  "+name);
+		return "welcome";
+	}
+
+
+3rd 
+use direct Model object here
+
+
+@RequestMapping(value="/login", method = RequestMethod.POST)
+	String loginPost(@RequestParam String name,
+			@RequestParam String password,Employee emp)
+	{
+		
+		System.out.println(emp.getName());
+		return "welcome";
+	}
+	
